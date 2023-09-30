@@ -1,0 +1,191 @@
+import random
+import os
+
+class MovieDetails:
+    def _init_(self):
+        self.name = ""
+        self.age = 0
+        self.seat = 0
+        self.id = 0
+
+def activity():
+    try:
+        with open("Reciept.txt", "r") as file:
+            data = file.read()
+            print(data)
+    except FileNotFoundError:
+        print("No activity found.")
+
+def reservation(seat, price, slection):
+    global id2  # Declare id2 as a global variable
+    print("\n                                SCREEN\n\n\n")
+    for i in range(1, 101):
+        if seat[i] == 0:
+            print(f"{i}\t", end="")
+        else:
+            print("*\t", end="")
+        if i % 10 == 0:
+            print("\n\n")
+
+    person[count].name = input("Please enter your name: ")
+    person[count].age = int(input("Please enter your age: "))
+    j = int(input("Mention the seat number: "))
+    
+    while j > 100 or j < 1:
+        print("Seat number is unavailable in this theater.")
+        j = int(input("Please re-enter seat number: "))
+    
+    if seat[j] == 1:
+        print("Sorry, this ticket is already booked! Please choose another seat.")
+        j = int(input("Please enter a different seat number: "))
+    else:
+        seat[j] = 1
+    
+    person[count].seat = j
+    if slection == 1:
+        movie1(j, person[count].name, id2, price)
+    elif slection == 2:
+        movie2(j, person[count].name, id2, price)
+    else:
+        movie3(j, person[count].name, id2, price)
+    id2 += 1
+
+def choice1():
+    print("                 Book Your Ticket              \n")
+    print("\n")
+    print("1.View the occupied seats\n")
+    print("2.Book your ticket\n")
+    print("3.Cancel your ticket\n")
+    print("4.Leave the portal\n")
+    choice = int(input("Enter your choice: "))
+    return choice
+
+def cancel(array):
+    stop = 0
+    print("Press 1 to cancel current ticket, Press 2 to cancel previous ticket")
+    z = int(input())
+    if z == 1:
+        Cseat = int(input("Please enter ID number of ticket: "))
+        for i in range(300):
+            if Cseat == person[i].id:
+                stop = 4
+                os.system("cls" if os.name == "nt" else "clear")
+                print(f"{person[i].name} your seat is {person[i].seat} cancelled")
+                array[person[i].seat] = 0
+                break
+        if stop != 4:
+            print("Ticket ID number is incorrect. Please enter the correct one to cancel the ticket.")
+    elif z == 2:
+        print("Please enter the booking ID of the previous session")
+        curs = int(input())
+        print(f"Booking ID : {curs} has been cancelled")
+        with open("Reciept.txt", "w") as out:
+            out.write("NULL")
+        choice1()
+    else:
+        print("Invalid Choice")
+
+def details():
+    passcode = input("Enter the password to see details: ")
+    if passcode == "123":
+        for i in range(count):
+            print(f"seat no: {person[i].seat} is booked by {person[i].name} ")
+    else:
+        print("Entered password is wrong")
+
+def cmovie():
+    print("\t\t\twhich movie ticket you want to cancel\n")
+    print("\t\t\t-------------------------------------\n")
+    print("\t\t\tpress 1 for The Imitation Game\n\n")
+    print("\t\t\tpress 2 for The interview\n\n")
+    print("\t\t\tpress 3 for The Grand Budapest Hotel\n")
+    i = int(input())
+    return i
+
+def movie():
+    print("\t\t\twhich movie you want to see?\n")
+    print("\t\t\t\n\n")
+    print("\t\t\tpress 1 for The Imitation Game\n\n")
+    print("\t\t\tpress 2 for The Interview\n\n")
+    print("\t\t\tpress 3 for The Grand Budapest Hotel\n")
+    i = int(input())
+    return i
+
+def movie1(choice, name, id2, price):
+    os.system("cls" if os.name == "nt" else "clear")
+    print("\n\n")
+    pop = int(input("Enter the number of people: "))
+    num = price * pop
+    randomID = random.randint(1000, 9999)
+    print("-----------------THEATER BOOKING TICKET----------------")
+    print("\n")
+    print("The Ticket has been booked for THE IMITATION GAME on 12-9-2014 at 7:30 PM\n")
+    print(f"Booking ID : {randomID}\n")
+    print(f"Hall no : 02 and Seat No. {choice}\n")
+    print(f"Grand Total : {num}\n")
+    person[count].id = id2
+    print("------------------------------------------------------------")
+    
+    with open("Reciept.txt", "w") as out:
+        out.write(f"CustomerName \t {name} \t BookingID \t {randomID} \t Price \t {num} \t Movie \t TheImitationGame")
+
+def movie2(choice, name, id2, price):
+    os.system("cls" if os.name == "nt" else "clear")
+    print("\n\n")
+    pop = int(input("Enter the number of people: "))
+    num = price * pop
+    randomID = random.randint(1000, 9999)
+    print("-----------------THEATER BOOKING TICKET----------------")
+    print("\n")
+    print("The Ticket has been booked for THE INTERVIEW on 12-9-2014 at 8:30 PM\n")
+    print(f"Booking ID : {randomID}\n")
+    print(f"Hall no : 02 and Seat No. {choice}\n")
+    print(f"Grand Total : {num}\n")
+    person[count].id = id2
+    print("------------------------------------------------------------")
+    
+    with open("Reciept.txt", "w") as out:
+        out.write(f"CustomerName \t {name} \t BookingID \t {randomID} \t Price \t {num} \t Movie \t TheInterview")
+
+def movie3(choice, name, id2, price):
+    os.system("cls" if os.name == "nt" else "clear")
+    print("\n\n")
+    pop = int(input("Enter the number of people: "))
+    num = price * pop
+    randomID = random.randint(1000, 9999)
+    print("-----------------THEATER BOOKING TICKET----------------")
+    print("\n")
+    print("The Ticket has been booked for THE GRAND BUDAPEST HOTEL on 12-9-2014 at 6:30 PM\n")
+    print(f"Booking ID : {randomID}\n")
+    print(f"Hall no : 03 and Seat No. {choice}\n")
+    print(f"Grand Total : {num}\n")
+    person[count].id = id2
+    print("------------------------------------------------------------")
+    
+    with open("Reciept.txt", "w") as out:
+        out.write(f"CustomerName \t {name} \t BookingID \t {randomID} \t Price \t {num} \t Movie \t TheGrandBudapestHotel")
+
+person = [MovieDetails() for _ in range(300)]
+count = 0
+id2 = 1300
+seat = [[0] * 101 for _ in range(3)]
+price = 270
+
+while True:
+    choice = choice1()
+    if choice == 1:
+        activity()
+        pass  # Do not call undefined function here
+    elif choice == 2:
+        slection = movie()
+        reservation(seat[slection-1], price, slection)
+        count += 1
+    elif choice == 3:
+        slection = cmovie()
+        cancel(seat[slection-1])
+    elif choice == 4:
+        break
+    elif choice == 5:
+        
+    else:
+        print("Choice not available")
